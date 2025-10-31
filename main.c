@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> /* для atof() */
+#include <math.h> /* для sin, exp, pow*/
 
 #include <windows.h>
 
@@ -56,6 +57,16 @@ int main ()
 			else
 				printf("ошибка: числа дробные\n");
 			break;
+        case 's':
+            push(sin(pop()));
+            break;
+        case 'e':
+            push(exp(pop()));
+            break;
+        case '^':
+            op2 = pop();
+            push(pow(pop(), op2));
+            break;
         case 'P': // печать последнего
             print_last();
             break;
