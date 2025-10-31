@@ -11,6 +11,7 @@ void push (double);
 double pop (void);
 void print_last(void);
 void replace(void);
+void doubler(void);
 
 /* калькулятор с обратной польской записью */
 int main ()
@@ -54,11 +55,14 @@ int main ()
 			else
 				printf("ошибка: числа дробные\n");
 			break;
-        case '?':
+        case '?': // печать последнего
             print_last();
             break;
-        case '$':
+        case '$': // менять местами два верхних элемента 
             replace();
+            break;
+        case '#':
+            doubler();
             break;
 		case '\n' :
 			printf("\t%.8g\n", pop());
@@ -159,6 +163,13 @@ void print_last(void)
         printf("%f", val[sp-1]);
     else
         printf("Нет элемента в стеке\n");
+}
+
+void doubler(void)
+{
+    int op = pop();
+    push(op);
+    push(op);
 }
 
 void replace(void)
