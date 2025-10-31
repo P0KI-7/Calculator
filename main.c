@@ -10,6 +10,7 @@ int getop (char []);
 void push (double);
 double pop (void);
 void print_last(void);
+void replace(void);
 
 /* калькулятор с обратной польской записью */
 int main ()
@@ -55,6 +56,9 @@ int main ()
 			break;
         case '?':
             print_last();
+            break;
+        case '$':
+            replace();
             break;
 		case '\n' :
 			printf("\t%.8g\n", pop());
@@ -155,4 +159,13 @@ void print_last(void)
         printf("%f", val[sp-1]);
     else
         printf("Нет элемента в стеке\n");
+}
+
+void replace(void)
+{
+    float op_1, op_2;
+    op_1 = pop();
+    op_2 = pop();
+    push(op_1);
+    push(op_2);
 }
