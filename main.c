@@ -9,6 +9,7 @@
 int getop (char []);
 void push (double);
 double pop (void);
+void print_last(void);
 
 /* калькулятор с обратной польской записью */
 int main ()
@@ -52,6 +53,9 @@ int main ()
 			else
 				printf("ошибка: числа дробные\n");
 			break;
+        case '?':
+            print_last();
+            break;
 		case '\n' :
 			printf("\t%.8g\n", pop());
 			break;
@@ -145,3 +149,10 @@ void ungetch(int c) /* вернуть символ на ввод */
 		buf[bufp++] = c;
 }
 
+void print_last(void)
+{
+    if (sp > 0)
+        printf("%f", val[sp-1]);
+    else
+        printf("Нет элемента в стеке\n");
+}
