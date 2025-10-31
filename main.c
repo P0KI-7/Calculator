@@ -6,6 +6,7 @@
 
 #define MAXOP 100 /* макс. размер операнда или оператора */
 #define NUMBER '0' /* признак числа */
+#define COMMAND '@' /* признак команды */
 
 int getop (char []);
 void push (double);
@@ -25,6 +26,7 @@ int main ()
 	int type;
 	double op2, op1;
 	char s[MAXOP];
+    char com;
 	while ((type = getop (s)) != EOF) {
 		switch (type) {
 		case NUMBER:
@@ -57,27 +59,36 @@ int main ()
 			else
 				printf("ошибка: числа дробные\n");
 			break;
-        case 's':
-            push(sin(pop()));
-            break;
-        case 'e':
-            push(exp(pop()));
-            break;
         case '^':
             op2 = pop();
             push(pow(pop(), op2));
             break;
-        case 'P': // печать последнего
-            print_last();
-            break;
-        case 'R': // менять местами два верхних элемента 
-            replace();
-            break;
-        case 'D': // дублировать элемент в стеке
-            doubler();
-            break;
-        case 'C':
-            clear();
+        
+        case COMMAND:
+            com = s[1];
+            switch (com){
+            case 's':
+                push(sin(pop()));
+                break;
+            case 'e':
+                push(exp(pop()));
+                break;
+            case 'P': // печать последнего
+                print_last();
+                break;
+            case 'R': // менять местами два верхних элемента 
+                replace();
+                break;
+            case 'D': // дублировать элемент в стеке
+                doubler();
+                break;
+            case 'C':
+                clear();
+                break;
+            default:
+                printf("Неизвестная команда %s\n", com);
+                break;
+            }
             break;
 		case '\n' :
 			printf("\t%.8g\n", pop());
@@ -128,6 +139,14 @@ int getop(char s[])
 		;
 	s[1] = '\0';
 	
+    if (c == '@')
+    {
+        s[0] = c;
+        s[1] = c = getch();
+        s[2] = '\0';
+        return COMMAND;
+    }
+
 	i = 0;
 	if (c =='-'){
 		c2 = getch();
